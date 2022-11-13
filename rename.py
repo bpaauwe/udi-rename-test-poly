@@ -51,7 +51,8 @@ def parameterHandler(params):
 
 def configHandler(data):
     LOGGER.error('CONFIGDONE handler called')
-    LOGGER.error('  -> nodes = {}'.fromat(data['nodes']))
+    if data:
+        LOGGER.error('  -> nodes = {}'.format(data['nodes']))
 
 if __name__ == "__main__":
     try:
@@ -71,7 +72,7 @@ if __name__ == "__main__":
         On first start there should be no node.  If there are no nodes
         then add a node.
         '''
-        nodes = polygot.getNodes()
+        nodes = polyglot.getNodes()
         LOGGER.error('On start, found nodes: {}'.format(nodes))
         if (nodes.length == 0):
             # add the node
