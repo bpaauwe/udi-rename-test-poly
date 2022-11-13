@@ -81,12 +81,14 @@ if __name__ == "__main__":
             polyglot.addNode(node, conn_status="ST")
 
             # now rename the node
-            LOGGER.error('renaming node to {}'.format(new_name))
-            polyglot.rename('addr_0001', new_name)
+            if new_name != "":
+                LOGGER.error('renaming node to {}'.format(new_name))
+                polyglot.renameNode('addr_0001', new_name)
         else:
             # rename the node to what was specified in the custom parameter
-            LOGGER.error('renaming node to {}'.format(new_name))
-            polyglot.rename('addr_0001', new_name)
+            if new_name != "":
+                LOGGER.error('renaming node to {}'.format(new_name))
+                polyglot.renameNode('addr_0001', new_name)
 
             LOGGER.error('Creating node with name "{}"'.format(new_name))
             node = TestNode(polyglot, 'addr_0001', 'addr_0001', new_name)
