@@ -59,7 +59,7 @@ def configHandler(data):
     LOGGER.error('CONFIGDONE handler called')
     if data:
         LOGGER.error('  -> nodes = {}'.format(data['nodes']))
-        node_list = data
+        node_list = data['nodes']
 
 if __name__ == "__main__":
     try:
