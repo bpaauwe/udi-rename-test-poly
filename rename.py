@@ -94,6 +94,9 @@ if __name__ == "__main__":
             node = TestNode(polyglot, 'addr_0001', 'addr_0001', new_name)
             polyglot.addNode(node, conn_status="ST")
 
+        time.sleep(10)
+        LOGGER.error('getNode = {}'.format(polyglot.getNode('addr_0001').name))
+
         # Just sit and wait for events
         polyglot.runForever()
     except (KeyboardInterrupt, SystemExit):
