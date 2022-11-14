@@ -83,7 +83,8 @@ if __name__ == "__main__":
 
         LOGGER.error('Nodes from config = {}'.format(node_list))
         for node in node_list:
-            LOGGER.error('Found node {}/{}'.format(node['name'],node['address']))
+            LOGGER.error('Found node: {}'.format(node))
+            LOGGER.error('Found node: {}/{}'.format(node['name'],node['address']))
             # if we try to rename a node now it should fail!
             LOGGER.error('renaming node {} to {}'.format(node['name'], new_name))
             polyglot.renameNode(node['address'], new_name)
