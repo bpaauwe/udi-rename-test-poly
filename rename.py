@@ -13,6 +13,7 @@ LOGGER = udi_interface.LOGGER
 Custom = udi_interface.Custom
 polyglot = None
 new_name = 'default'
+node_list = []
 
 '''
 TestNode is the device class.  Our simple counter device
@@ -43,16 +44,22 @@ def parameterHandler(params):
 
     LOGGER.error('CUSTOMPARAMS handler called {}'.format(params))
 
-    new_name = params['name']
+    # if the node exists, try renaming it
+    node = getNode('addr_0001')
+    if node:
+        LOGGER.error('User is renaming node {} to {}'.format(node.name, params['name']))
+        polyglot.renameNode(node.address, parms['name'])
 
     LOGGER.error('Finished processing custom parameters')
 
 
 
 def configHandler(data):
+    global node_list
     LOGGER.error('CONFIGDONE handler called')
     if data:
         LOGGER.error('  -> nodes = {}'.format(data['nodes']))
+        node_list = data
 
 if __name__ == "__main__":
     try:
@@ -69,30 +76,28 @@ if __name__ == "__main__":
         polyglot.updateProfile()
 
         '''
-        On first start there should be no node.  If there are no nodes
-        then add a node.
+        On start there should be no nodes in the node_internal list
         '''
         nodes = polyglot.getNodes()
         LOGGER.error('On start, found nodes: {}'.format(nodes))
-        if (len(nodes) == 0):
-            # add the node
-            LOGGER.error('Creating node with name "OriginalName"')
+
+        LOGGER.error('Nodes from config = {}'.format(node_list))
+        for node in node_list:
+            LOGGER.error('Found node {}/{}'.format(node['name'],node['address']))
+            # if we try to rename a node now it should fail!
+            LOGGER.error('renaming node {} to {}'.format(node['name'], new_name))
+            polyglot.renameNode(node['address'], new_name)
+
+            # now what happens if we try to create a node using the new name
+            node = TestNode(polyglot, node['address'], node['address'], new_name)
+            polyglot.addNode(node, conn_status="ST")
+
+        nodes = polyglot.getNodes()
+        if len(nodes) == 0:
+            LOGGER.error('No existing nodes, create one')
             node = TestNode(polyglot, 'addr_0001', 'addr_0001', 'OriginalName')
             polyglot.addNode(node, conn_status="ST")
 
-            # now rename the node
-            if new_name != "":
-                LOGGER.error('renaming node to {}'.format(new_name))
-                polyglot.renameNode('addr_0001', new_name)
-        else:
-            # rename the node to what was specified in the custom parameter
-            if new_name != "":
-                LOGGER.error('renaming node to {}'.format(new_name))
-                polyglot.renameNode('addr_0001', new_name)
-
-            LOGGER.error('Creating node with name "{}"'.format(new_name))
-            node = TestNode(polyglot, 'addr_0001', 'addr_0001', new_name)
-            polyglot.addNode(node, conn_status="ST")
 
         time.sleep(10)
         LOGGER.error('getNode = {}'.format(polyglot.getNode('addr_0001').name))
