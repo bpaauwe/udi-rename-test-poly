@@ -45,7 +45,7 @@ def parameterHandler(params):
     LOGGER.error('CUSTOMPARAMS handler called {}'.format(params))
 
     # if the node exists, try renaming it
-    node = getNode('addr_0001')
+    node = polyglot.getNode('addr_0001')
     if node:
         LOGGER.error('User is renaming node {} to {}'.format(node.name, params['name']))
         polyglot.renameNode(node.address, parms['name'])
