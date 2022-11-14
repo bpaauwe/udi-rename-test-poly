@@ -48,7 +48,7 @@ def parameterHandler(params):
     node = polyglot.getNode('addr_0001')
     if node:
         LOGGER.error('User is renaming node {} to {}'.format(node.name, params['name']))
-        polyglot.renameNode(node.address, parms['name'])
+        polyglot.renameNode(node.address, params['name'])
 
     LOGGER.error('Finished processing custom parameters')
 
