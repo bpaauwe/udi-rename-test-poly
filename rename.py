@@ -44,11 +44,7 @@ def parameterHandler(params):
 
     LOGGER.error('CUSTOMPARAMS handler called {}'.format(params))
 
-    # if the node exists, try renaming it
-    node = polyglot.getNode('addr_0001')
-    if node:
-        LOGGER.error('User is renaming node {} to {}'.format(node.name, params['name']))
-        polyglot.renameNode(node.address, params['name'])
+    new_name = params['name']
 
     LOGGER.error('Finished processing custom parameters')
 
@@ -64,7 +60,7 @@ def configHandler(data):
 if __name__ == "__main__":
     try:
         polyglot = udi_interface.Interface([])
-        polyglot.start('1.0.0')
+        polyglot.start('1.0.1')
 
         # subscribe to the events we want
         polyglot.subscribe(polyglot.CUSTOMPARAMS, parameterHandler)
@@ -86,12 +82,13 @@ if __name__ == "__main__":
             LOGGER.error('Found node: {}'.format(node))
             LOGGER.error('Found node: {}/{}'.format(node['name'],node['address']))
             # if we try to rename a node now it should fail!
-            LOGGER.error('renaming node {} to {}'.format(node['name'], new_name))
-            polyglot.renameNode(node['address'], new_name)
+            //LOGGER.error('renaming node {} to {}'.format(node['name'], new_name))
+            //polyglot.renameNode(node['address'], new_name)
 
             # now what happens if we try to create a node using the new name
+            LOGGER.error('Adding node with name = {}'.format(new_name))
             node = TestNode(polyglot, node['address'], node['address'], new_name)
-            polyglot.addNode(node, conn_status="ST")
+            polyglot.addNode(node, conn_status="ST", rename=True)
 
         nodes = polyglot.getNodes()
         if len(nodes) == 0:
