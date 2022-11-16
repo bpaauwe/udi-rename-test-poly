@@ -82,8 +82,8 @@ if __name__ == "__main__":
             LOGGER.error('Found node: {}'.format(node))
             LOGGER.error('Found node: {}/{}'.format(node['name'],node['address']))
             # if we try to rename a node now it should fail!
-            //LOGGER.error('renaming node {} to {}'.format(node['name'], new_name))
-            //polyglot.renameNode(node['address'], new_name)
+            #LOGGER.error('renaming node {} to {}'.format(node['name'], new_name))
+            #polyglot.renameNode(node['address'], new_name)
 
             # now what happens if we try to create a node using the new name
             LOGGER.error('Adding node with name = {}'.format(new_name))
