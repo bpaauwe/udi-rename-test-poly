@@ -87,12 +87,12 @@ if __name__ == "__main__":
                         'params': [
                             {
                                 'name': 'ip_addr',
-                                'title' 'IP address',
+                                'title': 'IP address',
                                 'isRequired': True
                             },
                             {
                                 'name': 'ip_port',
-                                'title' 'IP port',
+                                'title': 'IP port',
                                 'isRequired': True
                             }
                         ]
