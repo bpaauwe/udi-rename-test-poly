@@ -98,7 +98,6 @@ if __name__ == "__main__":
                         ]
                     }
                 ], True)
-                            },
 
         # Start running
         polyglot.ready()
