@@ -54,7 +54,7 @@ def renameNode():
     global new_name
 
     LOGGER.error('Updating node with name = {}'.format(new_name))
-    node = TestNode(polyglot, node['address'], node['address'], new_name)
+    node = TestNode(polyglot, 'addr_0001', 'addr_0001', new_name)
     polyglot.addNode(node, conn_status="ST", rename=True)
 
 
