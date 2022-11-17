@@ -70,10 +70,35 @@ if __name__ == "__main__":
         polyglot = udi_interface.Interface([])
         polyglot.start('1.0.3')
 
+        typedParameters = Custom(polyglot, "customtypedparams")
+
         # subscribe to the events we want
         polyglot.subscribe(polyglot.CUSTOMPARAMS, parameterHandler)
         polyglot.subscribe(polyglot.CONFIG, configHandler)
         polyglot.subscribe(polyglot.DISCOVER, renameNode)
+
+        typedParameters.load(
+                [
+                    {
+                        'name': 'AParam',
+                        'title': 'A test parameter',
+                        'desc': 'A parameter that we can use to test',
+                        'isList': True,
+                        'params': [
+                            {
+                                'name': 'ip_addr',
+                                'title' 'IP address',
+                                'isRequired': True
+                            },
+                            {
+                                'name': 'ip_port',
+                                'title' 'IP port',
+                                'isRequired': True
+                            }
+                        ]
+                    }
+                ], True)
+                            },
 
         # Start running
         polyglot.ready()
