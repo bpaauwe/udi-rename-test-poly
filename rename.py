@@ -49,6 +49,14 @@ def parameterHandler(params):
     LOGGER.error('Finished processing custom parameters')
 
 
+def renameNode():
+    global polyglot
+    global new_name
+
+    LOGGER.error('Updating node with name = {}'.format(new_name))
+    node = TestNode(polyglot, node['address'], node['address'], new_name)
+    polyglot.addNode(node, conn_status="ST", rename=True)
+
 
 def configHandler(data):
     global node_list
@@ -60,11 +68,12 @@ def configHandler(data):
 if __name__ == "__main__":
     try:
         polyglot = udi_interface.Interface([])
-        polyglot.start('1.0.2')
+        polyglot.start('1.0.3')
 
         # subscribe to the events we want
         polyglot.subscribe(polyglot.CUSTOMPARAMS, parameterHandler)
         polyglot.subscribe(polyglot.CONFIG, configHandler)
+        polyglot.subscribe(polyglot.DISCOVER, renameNode)
 
         # Start running
         polyglot.ready()
